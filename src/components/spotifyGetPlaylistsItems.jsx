@@ -32,13 +32,21 @@ const SpotifyGetPlaylistsItems = () => {
             const initialUrl = PLAYLISTSITEMS_ENDPOINT + selectedPlaylist.value + '/tracks';
             fetchAllPlaylistItems(initialUrl).then((allItems) => {
                 // Sort the items by track name
-                const sortedItems = allItems.sort((a, b) => {
-                    const nameA = a.track?.name.toLowerCase() || ''; // Handle undefined track
-                    const nameB = b.track?.name.toLowerCase() || ''; // Handle undefined track
+                const sortedItemsByName = allItems.sort((a, b) => {
+                    const nameA = a.track?.name || ''; // Handle undefined track
+                    const nameB = b.track?.name || ''; // Handle undefined track
                     return nameA.localeCompare(nameB);
                 });
-                //console.log(sortedItems); // Sorted items
-                localStorage.setItem("sortedPlaylistItems", sortedItems)
+                //console.log("by name, ", sortedItemsByName); // Sorted items
+                localStorage.setItem("sortedPlaylistItemsByName", JSON.stringify(sortedItemsByName))
+
+                // const sortedItemsById = allItems.sort((a, b) => {
+                //     const nameA = a.track?.id; // Handle undefined track
+                //     const nameB = b.track?.id; // Handle undefined track
+                //     return nameA.localeCompare(nameB);
+                // });
+                // console.log(sortedItemsById);
+                // localStorage.setItem("sortedPlaylistItemsById", sortedItemsById)
             });
         }
     };
